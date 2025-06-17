@@ -4,6 +4,7 @@ import {useState} from "react"
 import { Link, useNavigate } from "react-router-dom"
 import toast from 'react-hot-toast'
 import axios from 'axios'
+import BASE_URL from '../lib/config'
 
 const CreatePage = () => {
   const [title,setTitle]=useState("")
@@ -24,7 +25,7 @@ const CreatePage = () => {
     // }
     setLoading(true)
     try{
-      await axios.post("http://localhost:5001/api",
+      await axios.post(`${BASE_URL}`,
         {
           title,
           content

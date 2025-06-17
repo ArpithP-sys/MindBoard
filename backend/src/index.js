@@ -8,17 +8,19 @@ import { dirname } from "path";
 import apiRoutes from "./routes/apiRoutes.js";
 import {connectDB} from "./config/db.js"; // Importing the database connection function
 
+
 // import
 
 dotenv.config(); // Load environment variables from .env file
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 
  // Importing the API routes
 // console.log(process.env.MONGO_URI);
 const app = express();
 const PORT=process.env.PORT||5001; // Default to 5001 if PORT is not set in .env
+const __dirname=path.resolve();
 
 
 app.set('view engine','ejs');
@@ -28,10 +30,12 @@ app.set('controllers', path.join(__dirname, '.', 'controllers'));
 
 app.use(express.json()); // Middleware to parse JSON request bodies here in this case will get acces to request.body
  // Using the rate limiter 
-
+if(process.env.NODE_ENV !=="production")
+{
 app.use(cors({
   origin:"http://localhost:5173",// Allow requests from the frontend
-}))
+}));
+}
 //our simple custom middleware
 // app.use((req, res, next) => {
 //  console.log("We just got a new request");
@@ -42,6 +46,21 @@ app.use(cors({
 
 app.use("/api", apiRoutes); // Using the API routes
 //we can add more api routes here if needed
+
+
+// app.use(express.static(path.join(__dirname,"../frontend/dist")));
+
+// app.get("*",(req,res)=>{
+//   res.sendFile(path.join(__dirname,"../frontend/","dist","index.html"));
+// });
+if(process.env.NODE_ENV==="production")
+{
+  app.use(express.static(path.join(__dirname,"../frontend/dist")));
+
+app.get("*",(req,res)=>{
+  res.sendFile(path.join(__dirname,"../frontend/","dist","index.html"));
+});
+}
 connectDB();
 
 connectDB().then(() => {

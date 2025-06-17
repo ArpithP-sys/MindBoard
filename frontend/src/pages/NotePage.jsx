@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 import { ArrowLeftIcon, Loader2Icon, Trash2Icon } from 'lucide-react'
 import '../index.css'
 import { Link } from "react-router-dom"
-
+import BASE_URL from '../lib/config'
 
 
 const NotePage = () => {
@@ -20,7 +20,7 @@ const NotePage = () => {
     useEffect(()=>{
       const fetchNote=async()=>{
         try{
-          const res=await axios.get(`http://localhost:5001/api/${id}`)
+          const res=await axios.get(`${BASE_URL}/${id}`)
           setNote(res.data)
         }catch(error)
         {
@@ -41,7 +41,7 @@ const NotePage = () => {
       }
       setSaving(true)
       try {
-        await axios.put(`http://localhost:5001/api/${id}`, note)
+        await axios.put(`${BASE_URL}/${id}`, note)
         toast.success("Note updated successfully")
         navigate('/')
       } catch (error) {

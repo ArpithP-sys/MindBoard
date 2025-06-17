@@ -5,7 +5,7 @@ import toast from 'react-hot-toast'
 import '../index.css'
 import NoteCard from '../components/NoteCard'
 import NotesNotFound from '../components/NotesNotFound' // ✅ make sure this import exists
-
+import BASE_URL from '../lib/config'
 const HomePage = () => {
   const [notes, setNotes] = useState([])
   const [loading, setLoading] = useState(true)
@@ -13,7 +13,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/api")
+        const res = await axios.get(`${BASE_URL}`)
         console.log(res.data)
         setNotes(res.data)
       } catch (error) {
