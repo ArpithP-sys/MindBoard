@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.neon-text {
+  color: #39ff14; /* neon green */
+  text-shadow:
+    0 0 10px #39ff14,
+    0 0 20px #39ff14,
+    0 0 30px #39ff14,
+    0 0 50px #39ff14;
+  transition: all 0.3s ease-in-out;
+}
