@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 import {formatDate} from "../lib/utils"
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import BASE_URL from '../lib/config'
 const NoteCard = ({note,setNotes}) => {
     const handleDelete=async(e,id)=>{
         e.preventDefault()//get rid of the navigation behaviour
         if(!window.confirm("Do you want to delete this note? Are you sure about that?")) return;
         try{
-             await axios.delete(`http://localhost:5001/api/${id}`)
+             await axios.delete(`${BASE_URL}/${id}`)
              setNotes((prev)=>prev.filter(note=>note._id!==id))//get rid of deleted one without refreshing it
              toast.success("Note deleted successfully!")
         

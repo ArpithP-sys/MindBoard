@@ -55,7 +55,7 @@ const NotePage = () => {
       if(!window.confirm("Are you sure you want to delete this note?"))
         return
       try{
-        await axios.delete(`http://localhost:5001/api/${id}`)
+        await axios.delete(`${BASE_URL}/${id}`)
         toast.success("Note deleted successfully")
         navigate("/")
       }catch(error)
