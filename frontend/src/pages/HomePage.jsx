@@ -4,16 +4,23 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import '../index.css'
 import NoteCard from '../components/NoteCard'
-import NotesNotFound from '../components/NotesNotFound' // ✅ make sure this import exists
+import NotesNotFound from '../components/NotesNotFound'
 import BASE_URL from '../lib/config'
+import USER_ID from '../lib/user'
+
 const HomePage = () => {
   const [notes, setNotes] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let userId = localStorage.getItem("userId");
+  if (!userId) {
+    userId = prompt("Enter your user ID (e.g.,1234):");
+    if (userId) localStorage.setItem("userId", userId);
+  }
     const fetchNotes = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}`)
+        const res = await axios.get(`${BASE_URL}?userId=${USER_ID}`)
         console.log(res.data)
         setNotes(res.data)
       } catch (error) {
@@ -39,7 +46,7 @@ const HomePage = () => {
         {loading ? (
           <p>Loading...</p>
         ) : notes.length === 0 ? (
-          <NotesNotFound />  // ✅ shows only when no notes
+          <NotesNotFound />
         ) : (
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             {notes.map(note => (

@@ -11,7 +11,7 @@ import './index.css'
 
 const App = () => {
   const location = useLocation();
-
+  
   // List of paths where Navbar should be hidden
   const hideNavbarPaths = ["/note"];
   const shouldHideNavbar = hideNavbarPaths.some(path =>
